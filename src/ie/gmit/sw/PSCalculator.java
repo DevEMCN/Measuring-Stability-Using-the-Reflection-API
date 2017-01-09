@@ -5,9 +5,9 @@
  */
 package ie.gmit.sw;
 
+import static ie.gmit.sw.ReflectionStabilityApp.classMap;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -16,6 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
@@ -24,36 +25,39 @@ import java.util.jar.JarInputStream;
  *
  * @author eamon
  */
-public class ReflectionStabilityApp {
-    public static Map<String, Metric> classMap = new HashMap<>();
+public class PSCalculator {
+    private String jarName = "";
+    private  Map<String, Metric> classMap = new HashMap<>();
     
-    public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException, InterruptedException {
-       
-        initMap();
-        
-        for(String className : classMap.keySet()){
-            calculateStability(className);
-        }
-        
-        for(String className : classMap.keySet()){
-            File jarFile = new File("/home/eamon/Desktop/example1.jar");
-            try
-            {
-                URL fileURL = jarFile.toURI().toURL();
-                String jarURL = "jar:" + fileURL + "!/";
-                URL urls [] = { new URL(jarURL) };
-                URLClassLoader ucl = new URLClassLoader(urls);
-                Class cls = (Class) Class.forName(className, true,   ucl);
-                
-                System.out.println(classMap.get(cls.getName()).getStability());
-            } catch(MalformedURLException | ClassNotFoundException e){}
-        }
+    public PSCalculator(String name){
+        setJarName(name);
+        runTool();
+//        for(String className : classMap.keySet()){
+//            File jarFile = new File("/home/eamon/Desktop/example1.jar");
+//            try
+//            {
+//                URL fileURL = jarFile.toURI().toURL();
+//                String jarURL = "jar:" + fileURL + "!/";
+//                URL urls [] = { new URL(jarURL) };
+//                URLClassLoader ucl = new URLClassLoader(urls);
+//                Class cls = (Class) Class.forName(className, true,   ucl);
+//                
+//                System.out.println(classMap.get(cls.getName()).getStability());
+//            } catch(MalformedURLException | ClassNotFoundException e){}
+//        }
     }
-       
-
-    private static void initMap() {
+    
+    public String getJarName(){
+        return this.jarName;
+    }
+    
+    public void setJarName(String name){
+        this.jarName = name;
+    }
+    
+    private void initMap() {
         try{
-            JarInputStream in = new JarInputStream(new FileInputStream(new File("/home/eamon/Desktop/example1.jar")));
+            JarInputStream in = new JarInputStream(new FileInputStream(new File(this.getJarName())));
             JarEntry next = in.getNextJarEntry();
             while (next != null) {
                 if (next.getName().endsWith(".class")) {
@@ -67,11 +71,11 @@ public class ReflectionStabilityApp {
             } 
         }catch(IOException e){}
     }
-
-    private static void calculateStability(String className) {
+    
+    private void calculateStability(String className) {
         
         // adapated from https://coderanch.com/t/383279/java/dynamically-loading-class-file-jar post# 2
-        File jarFile = new File("/home/eamon/Desktop/example1.jar");
+        File jarFile = new File(this.getJarName());
 	try
 	{
             URL fileURL = jarFile.toURI().toURL();
@@ -156,7 +160,25 @@ public class ReflectionStabilityApp {
     
 	} catch(MalformedURLException | ClassNotFoundException e){}
     }
-
-   
-    
+    private void runTool(){
+        initMap();
+        
+        for(String className : classMap.keySet()){
+            calculateStability(className);
+        }
+    }
+    // method adapted from http://stackoverflow.com/questions/2257309/how-to-use-hashmap-with-jtable
+    public Object[][] getTableData(){
+        int index = 0;
+        Object[][] tableData = new Object[classMap.size()][2];
+        for(Metric metric: classMap.values()){
+            tableData[index][0] = metric.getClassName();
+            tableData[index][1] = metric.getStability();
+            
+            index++;
+        }
+        
+        return tableData;
+       
+    }
 }
