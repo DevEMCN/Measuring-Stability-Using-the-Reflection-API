@@ -15,6 +15,10 @@ public class Metric {
     private int inDegrees;
     private String className;
 
+    /**
+     *
+     * @return
+     */
     public double getStability() {
         double stability = 0.0;
 
@@ -28,26 +32,48 @@ public class Metric {
         return stability;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getOutDegrees() {
         return outDegrees;
     }
 
+    /**
+     *
+     */
     public void increaseOutDegrees() {
         this.outDegrees++;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getInDegrees() {
         return inDegrees;
     }
 
+    /**
+     *
+     */
     public void increaseInDegrees() {
         this.inDegrees++;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getClassName() {
         return className;
     }
 
+    /**
+     *
+     * @param className
+     */
     public void setClassName(String className) {
         this.className = className;
     }

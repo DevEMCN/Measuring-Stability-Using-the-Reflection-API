@@ -5,6 +5,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
+/**
+ *
+ * @author eamon
+ */
 public class AppSummary extends JDialog {
 
     private static final long serialVersionUID = 777L;
@@ -16,6 +20,12 @@ public class AppSummary extends JDialog {
     private JPanel buttonPanel = new JPanel();
     private Container c;
 
+    /**
+     *
+     * @param parent
+     * @param modal
+     * @param tstm
+     */
     public AppSummary(JFrame parent, boolean modal, TypeSummaryTableModel tstm) {
         super(parent, modal);
         super.setTitle("Summary");
@@ -26,7 +36,7 @@ public class AppSummary extends JDialog {
         c = getContentPane();
         c.setLayout(new FlowLayout());
 
-        this.tm = tstm;
+        this.tm = tstm; // setting the typeSummaryTableModel to the one given by resultsCtrl
 
         createTable();
         configureButtonPanel();
@@ -37,13 +47,18 @@ public class AppSummary extends JDialog {
         //System.out.println(tstm.getData().length);
     }
 
+    /**
+     *
+     * @return
+     */
     public TypeSummaryTableModel getTM() {
         return this.tm;
     }
 
     private void createTable() {
+        // get the typeSummaryTable Model
         tm = getTM();
-        System.out.println(tm.getData().length);
+        // set the typeSummaryTableModel for the table
         table = new JTable(tm);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setSelectionBackground(Color.YELLOW);

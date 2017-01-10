@@ -5,8 +5,12 @@ import javax.swing.border.BevelBorder;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 
+
+/**
+ *
+ * @author eamon
+ */
 public class AppWindow {
 
     private JFrame frame;
@@ -17,10 +21,13 @@ public class AppWindow {
     private JLabel fileChooserLabel = new JLabel("");
     private JButton btnResults = new JButton("See Results");
     private JarCtrl jc;
-    private JFileChooser fc;
+    
     private AnalyzerCtrl ac;
     private ResultsCtrl rc;
 
+    /**
+     *
+     */
     public AppWindow() {
         //Create a window for the application
         frame = new JFrame();
@@ -49,8 +56,8 @@ public class AppWindow {
         btnChooseFile.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnChooseFile.setMinimumSize(new java.awt.Dimension(90, 30));
 
-        jc = new JarCtrl(frame, txtFileName, fileChooserLabel);
-        btnChooseFile.addActionListener(jc);
+        jc = new JarCtrl(frame, txtFileName, fileChooserLabel); // pass jarCtrl required data
+        btnChooseFile.addActionListener(jc); // addjjarCtrl contrller to btn
 
         JButton btnOther = new JButton("Analyze Jar");
         btnOther.setToolTipText("Analyze Jar");
@@ -59,8 +66,8 @@ public class AppWindow {
         btnOther.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnOther.setMinimumSize(new java.awt.Dimension(150, 30));
 
-        ac = new AnalyzerCtrl(txtFileName, data, btnResults);
-        btnOther.addActionListener(ac);
+        ac = new AnalyzerCtrl(txtFileName, data, btnResults); // pass analyzerCtrl info
+        btnOther.addActionListener(ac); // add ctrl to btn
 
         top.add(txtFileName);
         top.add(btnChooseFile);
@@ -86,7 +93,7 @@ public class AppWindow {
         btnResults.setVisible(false);
 
         // there is a flaw in my mvc pattern here to get this working
-        rc = new ResultsCtrl(frame, ac);
+        rc = new ResultsCtrl(frame, ac); // used a getaround to make this work
         btnResults.addActionListener(rc);
 
         JButton btnQuit = new JButton("Quit"); //Create Quit button
@@ -102,6 +109,10 @@ public class AppWindow {
         frame.setVisible(true);
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         new AppWindow();
     }

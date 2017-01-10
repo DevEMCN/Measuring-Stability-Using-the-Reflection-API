@@ -5,16 +5,29 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+/**
+ *
+ * @author eamon
+ */
 public class ResultsCtrl implements ActionListener {
 
     private JFrame frame;
     private AnalyzerCtrl ac;
 
+    /**
+     *
+     * @param frame
+     * @param ac
+     */
     public ResultsCtrl(JFrame frame, AnalyzerCtrl ac) {
         this.frame = frame;
         this.ac = ac;
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         //   create a new type summary table model

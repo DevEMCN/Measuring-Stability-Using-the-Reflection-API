@@ -29,6 +29,10 @@ public class PSCalculator {
     private String jarName = "";
     private Map<String, Metric> classMap = new HashMap<>();
 
+    /**
+     *
+     * @param name
+     */
     public PSCalculator(String name) {
         setJarName(name);
         runTool();
@@ -47,10 +51,18 @@ public class PSCalculator {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String getJarName() {
         return this.jarName;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setJarName(String name) {
         this.jarName = name;
     }
@@ -172,6 +184,11 @@ public class PSCalculator {
     }
 
     // method adapted from http://stackoverflow.com/questions/2257309/how-to-use-hashmap-with-jtable
+
+    /**
+     *
+     * @return
+     */
     public Object[][] getTableData() {
         int index = 0;
         Object[][] tableData = new Object[classMap.size()][4];

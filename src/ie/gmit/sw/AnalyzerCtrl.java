@@ -6,6 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+/**
+ *
+ * @author eamon
+ */
 public class AnalyzerCtrl implements ActionListener {
 
     private PSCalculator psc;
@@ -13,6 +17,12 @@ public class AnalyzerCtrl implements ActionListener {
     private Object[][] data;
     private JButton btnResults;
 
+    /**
+     *
+     * @param jarName
+     * @param data
+     * @param btnResults
+     */
     public AnalyzerCtrl(JTextField jarName, Object[][] data, JButton btnResults) {
         //this.psc = psc;
         this.jarName = jarName;
@@ -20,6 +30,10 @@ public class AnalyzerCtrl implements ActionListener {
         this.btnResults = btnResults;
     }
 
+    /**
+     *
+     * @param arg0
+     */
     @Override
     public void actionPerformed(ActionEvent arg0) {
         System.out.println("Analyzing Jar");
@@ -28,12 +42,17 @@ public class AnalyzerCtrl implements ActionListener {
         psc = new PSCalculator(jarName.getText());
         // get the table data from the calculator to feed to the app summary below
         data = psc.getTableData();
-        System.out.println(data.length);
+     
         // make the app summary table view visible 
         btnResults.setVisible(true);
     }
 
+    /**
+     *
+     * @return
+     */
     public Object[][] getData() {
+        // used this to get around a problem with my code
         return this.data;
     }
 

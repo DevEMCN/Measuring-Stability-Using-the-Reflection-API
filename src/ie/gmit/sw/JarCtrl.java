@@ -9,6 +9,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+/**
+ *
+ * @author eamon
+ */
 public class JarCtrl implements ActionListener {
 
     private JFileChooser fc;
@@ -16,12 +20,22 @@ public class JarCtrl implements ActionListener {
     private JLabel fileChooserLabel;
     private JFrame frame;
 
+    /**
+     *
+     * @param frame
+     * @param txtFileName
+     * @param fileChooserLabel
+     */
     public JarCtrl(JFrame frame, JTextField txtFileName, JLabel fileChooserLabel) {
         this.frame = frame;
         this.txtFileName = txtFileName;
         this.fileChooserLabel = fileChooserLabel;
     }
 
+    /**
+     *
+     * @param evt
+     */
     public void actionPerformed(ActionEvent evt) {
         JFileChooser fc = new JFileChooser("./");
         int returnVal = fc.showOpenDialog(frame);
