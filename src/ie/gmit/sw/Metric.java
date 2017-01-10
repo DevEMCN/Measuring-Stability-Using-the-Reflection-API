@@ -10,44 +10,45 @@ package ie.gmit.sw;
  * @author eamon
  */
 public class Metric {
+
     private int outDegrees;
     private int inDegrees;
     private String className;
-    
-    public double getStability(){
-         double stability = 0.0;
-         
-         double ind = (double) getInDegrees();
-         double outd = (double) getOutDegrees();
-         
-         if(outd > 0){
-             stability = outd / (ind + outd);
-         }
-         
-         return stability;
+
+    public double getStability() {
+        double stability = 0.0;
+
+        double ind = (double) getInDegrees();
+        double outd = (double) getOutDegrees();
+
+        if (outd > 0) {
+            stability = outd / (ind + outd);
+        }
+
+        return stability;
     }
-    
-    public int getOutDegrees(){
+
+    public int getOutDegrees() {
         return outDegrees;
     }
-    
-    public void increaseOutDegrees(){
+
+    public void increaseOutDegrees() {
         this.outDegrees++;
     }
-    
-    public int getInDegrees(){
+
+    public int getInDegrees() {
         return inDegrees;
     }
-    
-    public void increaseInDegrees(){
+
+    public void increaseInDegrees() {
         this.inDegrees++;
     }
-    
-    public String getClassName(){
+
+    public String getClassName() {
         return className;
     }
-    
-    public void setClassName(String className){
+
+    public void setClassName(String className) {
         this.className = className;
     }
 }
