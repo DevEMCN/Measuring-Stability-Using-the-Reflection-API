@@ -169,11 +169,12 @@ public class PSCalculator {
     // method adapted from http://stackoverflow.com/questions/2257309/how-to-use-hashmap-with-jtable
     public Object[][] getTableData(){
         int index = 0;
-        Object[][] tableData = new Object[classMap.size()][2];
+        Object[][] tableData = new Object[classMap.size()][4];
         for(Metric metric: classMap.values()){
             tableData[index][0] = metric.getClassName();
-            tableData[index][1] = metric.getStability();
-            
+            tableData[index][1] = metric.getInDegrees();
+            tableData[index][2] = metric.getOutDegrees();
+            tableData[index][3] = metric.getStability();
             index++;
         }
         

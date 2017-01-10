@@ -3,7 +3,7 @@ package ie.gmit.sw;
 import javax.swing.table.*;
 public class TypeSummaryTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 777L;
-	private String[] cols = {"Class", "Stability"};
+	private String[] cols = {"Class", "Efferent", "Afferent", "Stability"};
 //	private Object[][] data = {
 //		{"Stuff 1", "Other Stuff 1"},
 //		{"Stuff 2", "Other Stuff 2"},

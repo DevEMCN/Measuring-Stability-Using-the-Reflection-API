@@ -13,14 +13,17 @@ public class AppWindow {
 	private Object[][] data;
 	private AppSummary as;
 	private TypeSummaryTableModel tstm;
+        private JLabel fileChooserLabel;
+        private JButton btnResults;
 	
 	public AppWindow(){
 		//Create a window for the application
 		frame = new JFrame();
 		frame.setTitle("B.Sc. in Software Development - GMIT");
-		frame.setSize(550, 500);
+		frame.setSize(500, 300);
 		frame.setResizable(false);
 		frame.setLayout(new FlowLayout());
+                
 		
         //The file panel will contain the file chooser
         JPanel top = new JPanel(new FlowLayout(FlowLayout.LEADING));
@@ -52,6 +55,12 @@ public class AppWindow {
                 	String name = file.getAbsolutePath(); 
                 	txtFileName.setText(name);
                 	System.out.println("You selected the following file: " + name);
+                        if(!txtFileName.getText().contains(".jar")){
+                            fileChooserLabel.setText("Invalid file");
+                        }else{
+                            fileChooserLabel.setText(txtFileName.getText());
+                            
+                        }
             	}
 			}
         });
@@ -65,51 +74,50 @@ public class AppWindow {
 		btnOther.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent evt) {
             	System.out.println("Analyzing Jar");
+                
+                // create a new instance of the positional stability calculator
             	psc = new PSCalculator(txtFileName.getText());
+                // get the table data from the calculator to feed to the app summary below
             	data = psc.getTableData();
-            	//asc = new AppSummaryCtrl(frame, data);
-			}
+                
+                // make the app summary table view visible 
+                btnResults.setVisible(true);
+            }
         });
 		
         top.add(txtFileName);
         top.add(btnChooseFile);
         top.add(btnOther);
         frame.getContentPane().add(top); //Add the panel to the window
+   
+        JPanel middle = new JPanel(new FlowLayout(FlowLayout.LEADING));
+        middle.setBorder(new BevelBorder(BevelBorder.RAISED));
+        middle.setPreferredSize(new java.awt.Dimension(500, 100));
+        middle.setMaximumSize(new java.awt.Dimension(500, 100));
+        middle.setMinimumSize(new java.awt.Dimension(500, 100));
         
+        fileChooserLabel = new JLabel("Choose a jar file");
+        middle.add(fileChooserLabel);
+        frame.getContentPane().add(middle);
         
-        //A separate panel for the programme output
-        JPanel mid = new JPanel(new FlowLayout(FlowLayout.LEADING));
-        mid.setBorder(new BevelBorder(BevelBorder.RAISED));
-        mid.setPreferredSize(new java.awt.Dimension(500, 300));
-        mid.setMaximumSize(new java.awt.Dimension(500, 300));
-        mid.setMinimumSize(new java.awt.Dimension(500, 300));
-        
-        CustomControl cc = new CustomControl(new java.awt.Dimension(500, 300));
-        cc.setBackground(Color.WHITE);
-        cc.setPreferredSize(new java.awt.Dimension(300, 300));
-        cc.setMaximumSize(new java.awt.Dimension(300, 300));
-        cc.setMinimumSize(new java.awt.Dimension(300, 300));
-        mid.add(cc);
-		frame.getContentPane().add(mid);
-		
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottom.setPreferredSize(new java.awt.Dimension(500, 50));
         bottom.setMaximumSize(new java.awt.Dimension(500, 50));
         bottom.setMinimumSize(new java.awt.Dimension(500, 50));
         
-        JButton btnDialog = new JButton("Show Dialog"); //Create Quit button
+         btnResults = new JButton("See Results"); //Create Quit button
+        btnResults.setVisible(false);
         //btnDialog.addActionListener(asc);
-        btnDialog.addActionListener(new java.awt.event.ActionListener() {
+        btnResults.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-//            	AppSummary as =  new AppSummary(frame, true);
-//            	as.show();
+//              // create a new type summary table model
             	tstm = new TypeSummaryTableModel();
-        		tstm.setData(data);
-        		//System.out.println(data.length);
-        		System.out.println(tstm.getData().length);
-        		as = new AppSummary(frame, true, tstm);
-        		as.show();
-			}
+                // set the data of the table to the data acquired from running the tool
+        	tstm.setData(data);
+        	// pass the app summary module a reference to the created tstm
+        	as = new AppSummary(frame, true, tstm);
+        	as.show();
+	    }
         });
         
         JButton btnQuit = new JButton("Quit"); //Create Quit button
@@ -118,7 +126,7 @@ public class AppWindow {
             	System.exit(0);
 			}
         });
-        bottom.add(btnDialog);
+        bottom.add(btnResults);
         bottom.add(btnQuit);
 
         frame.getContentPane().add(bottom);       
