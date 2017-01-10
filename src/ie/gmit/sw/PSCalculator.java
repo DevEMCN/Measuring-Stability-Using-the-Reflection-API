@@ -5,7 +5,6 @@
  */
 package ie.gmit.sw;
 
-import static ie.gmit.sw.ReflectionStabilityApp.classMap;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,19 +31,19 @@ public class PSCalculator {
     public PSCalculator(String name){
         setJarName(name);
         runTool();
-//        for(String className : classMap.keySet()){
-//            File jarFile = new File("/home/eamon/Desktop/example1.jar");
-//            try
-//            {
-//                URL fileURL = jarFile.toURI().toURL();
-//                String jarURL = "jar:" + fileURL + "!/";
-//                URL urls [] = { new URL(jarURL) };
-//                URLClassLoader ucl = new URLClassLoader(urls);
-//                Class cls = (Class) Class.forName(className, true,   ucl);
-//                
-//                System.out.println(classMap.get(cls.getName()).getStability());
-//            } catch(MalformedURLException | ClassNotFoundException e){}
-//        }
+        for(String className : classMap.keySet()){
+            File jarFile = new File("/home/eamon/Desktop/example1.jar");
+            try
+            {
+                URL fileURL = jarFile.toURI().toURL();
+                String jarURL = "jar:" + fileURL + "!/";
+                URL urls [] = { new URL(jarURL) };
+                URLClassLoader ucl = new URLClassLoader(urls);
+                Class cls = (Class) Class.forName(className, true,   ucl);
+                
+                System.out.println(classMap.get(cls.getName()).getStability());
+            } catch(MalformedURLException | ClassNotFoundException e){}
+        }
     }
     
     public String getJarName(){

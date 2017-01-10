@@ -9,6 +9,10 @@ import java.io.File;
 
 public class AppWindow {
 	private JFrame frame;
+	private PSCalculator psc;
+	private Object[][] data;
+	private AppSummary as;
+	private TypeSummaryTableModel tstm;
 	
 	public AppWindow(){
 		//Create a window for the application
@@ -37,6 +41,8 @@ public class AppWindow {
         btnChooseFile.setMaximumSize(new java.awt.Dimension(90, 30));
         btnChooseFile.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnChooseFile.setMinimumSize(new java.awt.Dimension(90, 30));
+        
+        
 		btnChooseFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent evt) {
         		JFileChooser fc = new JFileChooser("./");
@@ -59,7 +65,9 @@ public class AppWindow {
 		btnOther.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent evt) {
             	System.out.println("Analyzing Jar");
-            	
+            	psc = new PSCalculator(txtFileName.getText());
+            	data = psc.getTableData();
+            	//asc = new AppSummaryCtrl(frame, data);
 			}
         });
 		
@@ -90,10 +98,17 @@ public class AppWindow {
         bottom.setMinimumSize(new java.awt.Dimension(500, 50));
         
         JButton btnDialog = new JButton("Show Dialog"); //Create Quit button
+        //btnDialog.addActionListener(asc);
         btnDialog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-            	AppSummary as =  new AppSummary(frame, true);
-            	as.show();
+//            	AppSummary as =  new AppSummary(frame, true);
+//            	as.show();
+            	tstm = new TypeSummaryTableModel();
+        		tstm.setData(data);
+        		//System.out.println(data.length);
+        		System.out.println(tstm.getData().length);
+        		as = new AppSummary(frame, true, tstm);
+        		as.show();
 			}
         });
         

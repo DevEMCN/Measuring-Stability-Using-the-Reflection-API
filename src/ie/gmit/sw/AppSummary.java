@@ -15,7 +15,7 @@ public class AppSummary extends JDialog{
 	private JPanel buttonPanel = new JPanel();
 	private Container c;
 	
-	public AppSummary(JFrame parent, boolean modal){
+	public AppSummary(JFrame parent, boolean modal, TypeSummaryTableModel tstm){
         super(parent, modal);
         super.setTitle("Summary");
         super.setResizable(true);
@@ -24,17 +24,25 @@ public class AppSummary extends JDialog{
         
 		c = getContentPane();
 		c.setLayout(new FlowLayout());	
-
+		
+		this.tm = tstm;
+		
 		createTable();
         configureButtonPanel();
         
         c.add(tablePanel);
         c.add(buttonPanel);
+        
+        
+        //System.out.println(tstm.getData().length);
 	}
 	
-	
+	public TypeSummaryTableModel getTM(){
+		return this.tm;
+	}
 	private void createTable(){
-		tm = new TypeSummaryTableModel();
+		tm = getTM();
+		System.out.println(tm.getData().length);
 		table = new JTable(tm);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setSelectionBackground(Color.YELLOW);
@@ -45,9 +53,9 @@ public class AppSummary extends JDialog{
 		for (int i = 0; i < table.getColumnCount(); i++){
 			column = table.getColumnModel().getColumn(i);
 			if (i == 0){
-				column.setPreferredWidth(60);
-				column.setMaxWidth(60);
-				column.setMinWidth(60);
+				column.setPreferredWidth(200);
+				column.setMaxWidth(200);
+				column.setMinWidth(200);
 			}else{
 				column.setPreferredWidth(100);
 				column.setMaxWidth(100);
